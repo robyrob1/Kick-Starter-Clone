@@ -26,5 +26,5 @@ def create_project():
     data = request.get_json()
 
     new_project = Project(
-        title = 
+        title = data['title']
     )
