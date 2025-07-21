@@ -13,13 +13,14 @@ def get_all_projects():
 
 # This grabs the project by id
 @project_routes.route('/<int:id>')
-def get_projects(id):
+def get_project(id):
     project = Project.query.get(id)
     if not project:
         return {'error': 'Project is not found'}, 404
     
     return project.to_dict()
 
+#allows user to create a new project as long as they have an account and sign in
 @project_routes.route('/', methods=['POST'])
 @login_required
 def create_project():
@@ -39,6 +40,7 @@ def create_project():
     
     return new_project.to_dict(), 201
 
+#allows project owners to update their project if signed in
 @project_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def update_project(id):
@@ -62,6 +64,7 @@ def update_project(id):
     db.session.commit()
     return project.to_dict()
 
+#users can delte projects as long as theyre signd in
 @project_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_project(id):
