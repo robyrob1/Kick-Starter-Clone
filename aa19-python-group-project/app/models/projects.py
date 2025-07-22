@@ -24,7 +24,14 @@ class Project(db.Model):
 
     user = db.relationship('User', backref='user_projects')
 # dictionaries
-    def to_dict(self):
+
+    project_categories = db.relationship(
+        "ProjectCategory",
+        back_populates="project",
+        cascade="all, delete-orphan"
+)
+
+def to_dict(self):
         return {
             'id': self.id,
             'title': self.title,
