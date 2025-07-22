@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 
 [dev-packages]
+python-dotenv = "*"
+flask-wtf = "*"
 
 [requires]
 python_version = "3.9"
