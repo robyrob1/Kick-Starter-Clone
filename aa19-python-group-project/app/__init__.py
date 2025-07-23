@@ -11,14 +11,20 @@ from .api.campaign_routes import campaign_routes
 from .api.comment_routes import comment_routes
 from .api.donation_routes import donation_routes
 from .api.category_routes import category_routes
+from .api.project_routes import project_routes
 from .seeds import seed_commands
 from .config import Config
+from .api.category_routes import category_routes
+from app.api.project_categories import project_categories_bp
+
+
 
 app = Flask(__name__, static_folder='../react-vite/dist', static_url_path='/')
 
 # Setup login manager
 login = LoginManager(app)
 login.login_view = 'auth.unauthorized'
+
 
 
 @login.user_loader
@@ -36,6 +42,8 @@ app.register_blueprint(campaign_routes, url_prefix='/api/campaigns')
 app.register_blueprint(comment_routes, url_prefix='/api/comments')
 app.register_blueprint(donation_routes, url_prefix='/api/donations')
 app.register_blueprint(category_routes, url_prefix='/api/categories')
+app.register_blueprint(category_routes, url_prefix='/api/categories')
+app.register_blueprint(project_categories_bp)
 db.init_app(app)
 Migrate(app, db)
 

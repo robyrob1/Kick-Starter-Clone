@@ -4,10 +4,20 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+flask = "*"
+flask-sqlalchemy = "*"
+python-dotenv = "*"
+flask-login = "*"
+flask-wtf = "*"
+email-validator = "*"
+flask-migrate = "*"
+flask-cors = "*"
 
 [dev-packages]
 python-dotenv = "*"
 flask-wtf = "*"
+pytest = "*"
+flask-testing = "*"
 
 [requires]
 python_version = "3.9"

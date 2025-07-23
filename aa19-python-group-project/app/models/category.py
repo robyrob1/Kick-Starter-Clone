@@ -10,7 +10,12 @@ class Category(db.Model):
     name = db.Column(db.String(50), nullable=False, unique=True)
 
     # Relationships
-    # project_categories = db.relationship("ProjectCategory", back_populates="category", cascade="all, delete")
+   
+    project_categories = db.relationship(
+        "ProjectCategory",
+        back_populates="category",
+        cascade="all, delete-orphan"
+)
 
     def to_dict(self):
         return {
