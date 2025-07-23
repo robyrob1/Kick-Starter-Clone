@@ -18,6 +18,7 @@ RUN pip install -r requirements.txt
 RUN pip install psycopg2
 
 COPY . .
+RUN flask db stamp b964a898c501
 
 RUN flask db upgrade
 RUN flask seed undo && flask seed all
