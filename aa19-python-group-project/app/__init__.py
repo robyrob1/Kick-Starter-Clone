@@ -11,7 +11,7 @@ from .api.project_routes import project_routes
 from .seeds import seed_commands
 from .config import Config
 from .api.category_routes import category_routes
-from app.api.project_categories import project_categories_bp
+# from app.api.project_categories import project_categories_bp
 
 
 
@@ -35,7 +35,7 @@ app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(category_routes, url_prefix='/api/categories')
-app.register_blueprint(project_categories_bp)
+# app.register_blueprint(project_categories_bp)
 db.init_app(app)
 Migrate(app, db)
 
