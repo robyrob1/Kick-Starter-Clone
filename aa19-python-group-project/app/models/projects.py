@@ -29,9 +29,9 @@ class Project(db.Model):
         "ProjectCategory",
         back_populates="project",
         cascade="all, delete-orphan"
-)
+    )
 
-def to_dict(self):
+    def to_dict(self):
         return {
             'id': self.id,
             'title': self.title,
