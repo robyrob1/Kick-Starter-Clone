@@ -1,5 +1,9 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
+from .campaigns import seed_campaigns, undo_campaigns
+from .comments import seed_comments, undo_comments
+from .donations import seed_donations, undo_donations
+
 from .projects import seed_projects, undo_projects
 from app.models.db import db, environment, SCHEMA
 from .categories import seed_categories, undo_categories
@@ -13,6 +17,7 @@ seed_commands = AppGroup('seed')
 # Creates the `flask seed all` command
 @seed_commands.command('all')
 def seed():
+<<<<<<< HEAD
     # Undo all seeds first to avoid duplicates
     # undo_project_categories()
     undo_categories()
@@ -20,6 +25,18 @@ def seed():
     undo_projects()
 
     # Then seed fresh
+=======
+    if environment == 'production':
+        # Before seeding in production, you want to run the seed undo 
+        # command, which will  truncate all tables prefixed with 
+        # the schema name (see comment in users.py undo_users function).
+        # Make sure to add all your other model's undo functions below
+        undo_project_categories()
+        undo_categories()
+        undo_campaigns() 
+        undo_users()
+        undo_projects()
+>>>>>>> dev
     seed_users()
     seed_categories()
     seed_projects()
@@ -32,4 +49,11 @@ def undo():
     # undo_project_categories()
     undo_projects()
     undo_categories()
+    undo_campaigns()
     undo_users()
+<<<<<<< HEAD
+=======
+    undo_donations()
+    undo_comments()
+    # Add other undo functions here
+>>>>>>> dev
