@@ -11,11 +11,11 @@ class Category(db.Model):
 
     # Relationships
    
-    project_categories = db.relationship(
-        "ProjectCategory",
-        back_populates="category",
-        cascade="all, delete-orphan"
-)
+#     project_categories = db.relationship(
+#         "ProjectCategory",
+#         back_populates="category",
+#         cascade="all, delete-orphan"
+# )
 
     def to_dict(self):
         return {

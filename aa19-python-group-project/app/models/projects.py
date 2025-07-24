@@ -29,7 +29,11 @@ class Project(db.Model):
         "ProjectCategory",
         back_populates="project",
         cascade="all, delete-orphan"
-    )
+
+    project_categories = db.relationship(
+        "ProjectCategory",
+        back_populates="project",
+        cascade="all, delete-orphan"
 
     def to_dict(self):
         return {
