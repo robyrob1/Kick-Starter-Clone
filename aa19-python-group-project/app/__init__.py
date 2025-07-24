@@ -14,7 +14,6 @@ from .api.category_routes import category_routes
 from .api.project_routes import project_routes
 from .seeds import seed_commands
 from .config import Config
-from .api.category_routes import category_routes
 from app.api.project_categories import project_categories_bp
 
 
@@ -42,7 +41,7 @@ app.register_blueprint(campaign_routes, url_prefix='/api/campaigns')
 app.register_blueprint(comment_routes, url_prefix='/api/comments')
 app.register_blueprint(donation_routes, url_prefix='/api/donations')
 app.register_blueprint(category_routes, url_prefix='/api/categories')
-app.register_blueprint(category_routes, url_prefix='/api/categories')
+app.register_blueprint(project_routes, url_prefix='/api/projects')
 app.register_blueprint(project_categories_bp)
 db.init_app(app)
 Migrate(app, db)
