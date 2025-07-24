@@ -14,8 +14,6 @@ flask-migrate = "*"
 flask-cors = "*"
 
 [dev-packages]
-python-dotenv = "*"
-flask-wtf = "*"
 pytest = "*"
 flask-testing = "*"
 
