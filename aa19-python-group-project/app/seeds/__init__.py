@@ -8,6 +8,7 @@ from .projects import seed_projects, undo_projects
 from app.models.db import db, environment, SCHEMA
 from .categories import seed_categories, undo_categories
 from .project_categories import seed_project_categories, undo_project_categories
+from .rewards import seed_rewards, undo_rewards
 
 
 # Creates a seed group to hold our commands
@@ -28,11 +29,13 @@ def seed():
         undo_campaigns() 
         undo_users()
         undo_projects()
+        undo_rewards()
     seed_users()
     seed_categories()
     seed_projects()
     seed_project_categories()
     # Add other seed functions here
+    seed_rewards()
 
 
 # Creates the `flask seed undo` command
@@ -46,3 +49,4 @@ def undo():
     undo_donations()
     undo_comments()
     # Add other undo functions here
+    undo_rewards()
