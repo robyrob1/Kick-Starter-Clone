@@ -14,11 +14,8 @@ from .api.category_routes import category_routes
 from .api.project_routes import project_routes
 from .seeds import seed_commands
 from .config import Config
-<<<<<<< HEAD
 from .api.category_routes import category_routes
-=======
 from app.api.project_categories import project_categories_bp
->>>>>>> f81831ba1d5814c8fe711d7b67558c4bc12768e6
 
 
 
@@ -45,12 +42,9 @@ app.register_blueprint(campaign_routes, url_prefix='/api/campaigns')
 app.register_blueprint(comment_routes, url_prefix='/api/comments')
 app.register_blueprint(donation_routes, url_prefix='/api/donations')
 app.register_blueprint(category_routes, url_prefix='/api/categories')
-<<<<<<< HEAD
-
-=======
 app.register_blueprint(project_routes, url_prefix='/api/projects')
 app.register_blueprint(project_categories_bp)
->>>>>>> f81831ba1d5814c8fe711d7b67558c4bc12768e6
+
 db.init_app(app)
 Migrate(app, db)
 
