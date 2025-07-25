@@ -19,7 +19,7 @@ def check_ownership(project):
 @project_categories_bp.route('', methods=['GET'])
 def get_categories(project_id):
     project = get_project_or_404(project_id)
-    categories = [cat.to_dict() for cat in project.categories]  # assuming backref 'categories'
+    categories = [cat.to_dict() for cat in project.categories]  
     return jsonify(categories)
 
 
@@ -29,7 +29,7 @@ def add_categories(project_id):
     check_ownership(project)
 
     data = request.get_json()
-    # Accept either single category_id or list of category_ids
+    
     category_ids = data.get('category_ids') or [data.get('category_id')]
     category_ids = [cid for cid in category_ids if cid]  # filter out None
 
@@ -49,7 +49,6 @@ def update_categories(project_id):
 
     data = request.get_json()
     new_category_ids = data.get('category_ids', [])
-    # Replace categories with the new list
     new_categories = Category.query.filter(Category.id.in_(new_category_ids)).all()
     project.categories = new_categories
 
