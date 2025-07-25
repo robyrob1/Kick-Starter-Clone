@@ -61,3 +61,13 @@ def delete_category(category_id):
     db.session.commit()
 
     return jsonify({"message": "Category deleted"}), 200
+
+@category_routes.route('/<int:category_id>/projects')
+def get_projects_for_category(category_id):
+    category = Category.query.get(category_id)
+    if not category:
+        return {'error': 'Category not found'}, 404
+
+    # The 'projects' back-reference in your Category model gets the data
+    projects = [project.to_dict() for project in category.projects]
+    return jsonify(projects)

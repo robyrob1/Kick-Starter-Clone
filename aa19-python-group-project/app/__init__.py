@@ -15,7 +15,6 @@ from .api.project_routes import project_routes
 from .api.reward_routes import reward_routes
 from .seeds import seed_commands
 from .config import Config
-from .api.category_routes import category_routes
 from app.api.project_categories import project_categories_bp
 
 

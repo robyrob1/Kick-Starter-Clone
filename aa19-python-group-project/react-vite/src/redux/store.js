@@ -6,12 +6,15 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
-import projectReducer from "./projects";
+import projectsReducer from "./projects";
+import allCategoriesReducer from './allCategories';
+
 
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   projects: projectsReducer,
+  allCategories: allCategoriesReducer,
 });
 
 let enhancer;
