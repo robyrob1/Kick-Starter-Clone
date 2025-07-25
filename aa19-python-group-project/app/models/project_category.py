@@ -10,6 +10,6 @@ class ProjectCategory(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("projects.id")), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("categories.id")), nullable=False)
 
-    # Use string names for relationships to avoid import issues
+    # Relationships to the 'Project' and 'Category' models
     project = db.relationship("Project", back_populates="project_categories")
     category = db.relationship("Category", back_populates="project_categories")
