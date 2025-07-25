@@ -12,6 +12,7 @@ from .api.comment_routes import comment_routes
 from .api.donation_routes import donation_routes
 from .api.category_routes import category_routes
 from .api.project_routes import project_routes
+from .api.reward_routes import reward_routes
 from .seeds import seed_commands
 from .config import Config
 from .api.category_routes import category_routes
@@ -43,6 +44,7 @@ app.register_blueprint(comment_routes, url_prefix='/api/comments')
 app.register_blueprint(donation_routes, url_prefix='/api/donations')
 app.register_blueprint(category_routes, url_prefix='/api/categories')
 app.register_blueprint(project_routes, url_prefix='/api/projects')
+app.register_blueprint(reward_routes, url_prefix='/api/rewards')
 app.register_blueprint(project_categories_bp)
 
 db.init_app(app)

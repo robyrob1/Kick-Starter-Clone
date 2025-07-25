@@ -7,4 +7,5 @@ from .comment import Comment
 from .donation import Donation
 # from .project_category import ProjectCategory
 from .project_category import ProjectCategory
+from .rewards import Reward
 from .db import environment, SCHEMA
