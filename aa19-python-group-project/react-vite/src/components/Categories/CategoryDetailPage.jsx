@@ -19,7 +19,7 @@ function CategoryDetailPage() {
         }
     }, [dispatch, categoryId]);
 
-    // This loading guard will now work perfectly
+    // This is a loading guard
     if (!projects.length) {
         return <div>Loading projects...</div>;
     }

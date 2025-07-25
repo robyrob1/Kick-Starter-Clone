@@ -17,10 +17,7 @@ class User(db.Model, UserMixin):
     # --- Relationships ---
     comments = db.relationship('Comment', back_populates='user', cascade='all, delete-orphan')
     donations = db.relationship('Donation', back_populates='user', cascade='all, delete-orphan')
-
-    # --- ADD THIS RELATIONSHIP ---
     projects = db.relationship('Project', back_populates='user', cascade="all, delete-orphan")
-    # --- END OF NEW CODE ---
 
     @property
     def password(self):

@@ -82,7 +82,6 @@ function projectsReducer(state = initialState, action){
         case SET_PROJECT:
             return {...state, currentProject: action.payload};
         case ADD_PROJECT:
-            // Ensure state.allProjects is an array before spreading
             const allProjectsArray = Array.isArray(state.allProjects) ? state.allProjects : [];
             return {...state, allProjects: [...allProjectsArray, action.payload]};
         default:
