@@ -1,8 +1,11 @@
 const SET_PROJECTS = 'projects/setProjects';
 const SET_PROJECT = 'projects/setProject';
 const ADD_PROJECT = 'projects/addProject';
+const CLEAR_PROJECTS = 'projects/clearProjects';
 
 
+
+// Action Creators
 const setProjects = (projects) => ({
   type: SET_PROJECTS,
   payload: projects
@@ -16,6 +19,10 @@ const setIndividualProject = (project) => ({
 const addProject = (project) => ({
   type: ADD_PROJECT,
   payload: project
+});
+
+export const clearProjects = () => ({
+    type: CLEAR_PROJECTS
 });
 
 // Thunks
@@ -53,9 +60,16 @@ export const createProject = (projectData) => async (dispatch) => {
     }
 };
 
+export const fetchProjectsForCategory = (categoryId) => async (dispatch) => {
+    const response = await fetch(`/api/categories/${categoryId}/projects`);
+    if (response.ok) {
+        const projectsForCategory = await response.json();
+        dispatch(setProjects(projectsForCategory));
+    }
+};
 
-// Reducers
 
+// Reducer
 const initialState ={
     allProjects: [],
     currentProject: null
@@ -68,8 +82,8 @@ function projectsReducer(state = initialState, action){
         case SET_PROJECT:
             return {...state, currentProject: action.payload};
         case ADD_PROJECT:
-            return {...state, allProjects: [...state.allProjects, action.payload]};
-
+            const allProjectsArray = Array.isArray(state.allProjects) ? state.allProjects : [];
+            return {...state, allProjects: [...allProjectsArray, action.payload]};
         default:
            return state;
     }
