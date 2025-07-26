@@ -1,0 +1,68 @@
+.projects-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.header p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.footer {
+  text-align: center;
+  font-size: 1.1px;
+}
+
+.project-card {
+  border: 1px solid #ccc;
+  background: white;
+  margin-bottom: 20px;
+  padding: 15px;
+}
+
+.no-image {
+  text-align: center;
+  padding-top: 50px;
+  color: #999;
+}
+
+.category-tag {
+  background: #333;
+  color: white;
+  padding: 3px 8px;
+  font-size: 12px;
+}
+
+.title {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.description {
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.creator {
+  color: #888;
+  font-size: 14px;
+}
