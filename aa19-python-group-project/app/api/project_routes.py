@@ -5,13 +5,13 @@ from datetime import datetime
 
 project_routes = Blueprint('projects', __name__)
 
-# Home page, gets all of the projects
+
 @project_routes.route('/')
 def get_all_projects():
     projects = Project.query.all()
     return {'projects': [project.to_dict() for project in projects]}   
 
-# This grabs the project by id
+
 @project_routes.route('/<int:id>')
 def get_project(id):
     project = Project.query.get(id)
