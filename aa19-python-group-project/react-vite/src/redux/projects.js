@@ -81,9 +81,10 @@ function projectsReducer(state = initialState, action){
             return {...state, allProjects: action.payload };
         case SET_PROJECT:
             return {...state, currentProject: action.payload};
-        case ADD_PROJECT:
+        case ADD_PROJECT:{
             const allProjectsArray = Array.isArray(state.allProjects) ? state.allProjects : [];
             return {...state, allProjects: [...allProjectsArray, action.payload]};
+        }
         default:
            return state;
     }

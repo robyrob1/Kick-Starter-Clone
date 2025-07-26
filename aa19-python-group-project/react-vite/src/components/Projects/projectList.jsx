@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allProjects } from "../../redux/projects";
+import ProjectCard from "./ProjectCard";
+import './Projects.css';
 
-function ProjectsList() {
+function ProjectList() {
     const dispatch = useDispatch();
     const projects = useSelector(state => state.projects.allProjects);
 
@@ -10,19 +12,16 @@ function ProjectsList() {
         dispatch(allProjects());
     }, [dispatch]);
 
-    return(<div>
-            <h1>All Projects</h1>
-            {projects.map(project => (
-                <div key={project.id}>
-                    <h3>{project.title}</h3>
-                    <p>{project.description}</p>
-                    <p>Goal: ${project.goal}</p>
-                    <p>Raised: ${project.current_amount}</p>
-                </div>
-            ))}
+     return (
+        <div>
+            <h1>StartKicker Projects</h1>
+            <div className="projects-grid">
+                {projects.map(project => (
+                    <ProjectCard key={project.id} project={project} />
+                ))}
+            </div>
         </div>
     );
-
 }
 
-    export default ProjectsList;
+export default ProjectList;

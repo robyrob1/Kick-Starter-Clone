@@ -4,7 +4,8 @@ import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import AllCategoriesPage from '../components/Categories/AllCategoriesPage';
 import CategoryDetailPage from '../components/Categories/CategoryDetailPage';
-
+import ProjectList from '../components/Projects/ProjectList';
+import ProjectDetails from '../components/Projects/ProjectDetails';
 
 export const router = createBrowserRouter([
   {
@@ -12,7 +13,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1>Welcome!</h1>,
+        element: <ProjectList />,
       },
       {
         path: "login",
@@ -30,6 +31,14 @@ export const router = createBrowserRouter([
       {
         path: "categories/:categoryId",
         element: <CategoryDetailPage />,
+      },
+     {
+      path: "projects",
+       element: <ProjectList />,
+      },
+       {
+       path: "projects/:projectId",
+       element: <ProjectDetails />,
       },
     ],
   },
