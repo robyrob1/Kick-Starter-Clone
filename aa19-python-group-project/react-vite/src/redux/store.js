@@ -8,14 +8,14 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import projectsReducer from "./projects";
 import allCategoriesReducer from './allCategories';
-import projectCategoriesReducer from '../components/ProjectCategories';
+import categoriesReducer from './categories';
 
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   projects: projectsReducer,
   allCategories: allCategoriesReducer,
-  projectCategories: projectCategoriesReducer,
+  projectCategories: categoriesReducer,
 });
 
 let enhancer;
