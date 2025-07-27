@@ -14,27 +14,3 @@
     gap: 20px; /* Space between Home and Profile button */
     width: 100%; /* Make it take the full width */
 }
-
-/* Container for the category links */
-.nav-category-row {
-    display: flex; /* This keeps categories horizontal */
-    flex-wrap: wrap; /* Allows categories to wrap to the next line if needed */
-    justify-content: center; /* centers the content */
-    width: 100%; /* ensure it centers across the full width */
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    margin-top: 15px; /* Add space below the top row */
-    gap: 50px; /* Space between category items */
-}
-
-.nav-category-row a {
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-}
-
-.nav-category-row a.active {
-    color: #007bff;
-    border-bottom: 2px solid #007bff;
-}
