@@ -22,7 +22,7 @@ function LandingPage() {
   return (
     <div className="landing-container">
       <header className="landing-header">
-        <h1 className="logo">OriginFund</h1>
+        <h1 className="logo">StartKicker</h1>
         <div className="auth-buttons">
           <Link to="/login">Log in</Link>
           <Link to="/signup">Sign up</Link>
