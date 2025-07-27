@@ -43,8 +43,12 @@ function LandingPage() {
       <div className="campaign-grid">
         {projects.map((project) => (
           <div className="campaign-card" key={project.id}>
-            <img src={project.image_url} alt={project.title} className="campaign-img" />
-            <h3>{project.title}</h3>
+            <Link to={`/projects/${project.id}`}>
+              <img src={project.image_url} alt={project.title} className="campaign-img" />
+            </Link>
+            <Link to={`/projects/${project.id}`} className="project-title-link">
+              <h3>{project.title}</h3>
+            </Link>
             <p><strong>Creator:</strong> TestUser101</p> {/* update with creator name if you fetch it */}
             <p>{daysLeft(project.end_date)}</p>
             <p><strong>Goal:</strong> ${project.goal}</p>
