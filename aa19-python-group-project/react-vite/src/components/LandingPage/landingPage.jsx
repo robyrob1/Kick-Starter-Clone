@@ -36,7 +36,9 @@ function LandingPage() {
           <option>Technology</option>
           <option>Art</option>
           <option>Games</option>
-          <option>Education</option>
+          <option>Music</option>
+          <option>Film & Video</option>
+          <option>Food & Drink</option>
         </select>
       </div>
 
