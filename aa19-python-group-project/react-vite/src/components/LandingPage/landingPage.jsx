@@ -1,16 +1,35 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react"; 
 import { useDispatch, useSelector } from "react-redux";
-import { allProjects } from "../../redux/projects";
+import { allProjects, fetchProjectsForCategory } from "../../redux/projects"; 
+import { fetchAllCategories } from "../../redux/allCategories";
 import { Link } from "react-router-dom";
-import "./LandingPage.css";
+import "./LandingPage.css"; 
 
 function LandingPage() {
   const dispatch = useDispatch();
+
+  // 3. Add local state to track the selected category
+  const [selectedCategory, setSelectedCategory] = useState(""); 
+
   const projects = useSelector((state) => state.projects.allProjects);
+  const categories = useSelector((state) => Object.values(state.allCategories));
 
   useEffect(() => {
-    dispatch(allProjects());
-  }, [dispatch]);
+    
+    if (selectedCategory) {
+      // If a category is selected, fetch only those projects
+      dispatch(fetchProjectsForCategory(selectedCategory));
+    } else {
+      // Otherwise, fetch all projects
+      dispatch(allProjects());
+    }
+    // Always fetch the list of all categories for the dropdown
+    dispatch(fetchAllCategories());
+  }, [dispatch, selectedCategory]);
+
+  const handleCategorySelect = (e) => {
+    setSelectedCategory(e.target.value);
+  };
 
   const daysLeft = (endDate) => {
     const now = new Date();
@@ -31,14 +50,13 @@ function LandingPage() {
 
       <div className="landing-controls">
         <input type="text" placeholder="Search projects..." className="search-bar" />
-        <select className="sort-dropdown">
-          <option>Sort by Genre</option>
-          <option>Technology</option>
-          <option>Art</option>
-          <option>Games</option>
-          <option>Music</option>
-          <option>Film & Video</option>
-          <option>Food & Drink</option>
+        <select className="sort-dropdown" onChange={handleCategorySelect} value={selectedCategory}>
+          <option value="">Sort by Genre</option> {/* Changed text for clarity */}
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -51,8 +69,8 @@ function LandingPage() {
             <Link to={`/projects/${project.id}`} className="project-title-link">
               <h3>{project.title}</h3>
             </Link>
-            <p><strong>Creator:</strong> TestUser101</p> {/* update with creator name if you fetch it */}
-            <p>{daysLeft(project.end_date)}</p>
+            <p><strong>Creator:</strong> {project.creator}</p>
+            <p>{daysLeft(project.deadline)}</p>
             <p><strong>Goal:</strong> ${project.goal}</p>
           </div>
         ))}
