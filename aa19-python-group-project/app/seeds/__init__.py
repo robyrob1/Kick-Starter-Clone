@@ -12,7 +12,6 @@ from .rewards import seed_rewards, undo_rewards
 
 
 # Creates a seed group to hold our commands
-# So we can type `flask seed --help`
 seed_commands = AppGroup('seed')
 
 
@@ -21,32 +20,42 @@ seed_commands = AppGroup('seed')
 def seed():
     if environment == 'production':
         # Before seeding in production, you want to run the seed undo 
-        # command, which will  truncate all tables prefixed with 
-        # the schema name (see comment in users.py undo_users function).
-        # Make sure to add all your other model's undo functions below
-        undo_project_categories()
-        undo_categories()
-        undo_campaigns() 
-        undo_users()
-        undo_projects()
-        undo_rewards()
-    seed_users()
-    seed_categories()
-    seed_projects()
+        # command, which will truncate all tables prefixed with 
+        # the schema name.
+        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        # Add other TRUNCATE commands here for other tables
+        db.session.commit()
+
+    
+    # The undo commands need to run for all environments to ensure a clean slate.
+    # The logic within each undo function already handles the difference
+    # between development (DELETE) and production (TRUNCATE).
+    undo_rewards()
+    undo_project_categories()
+    undo_projects()
+    undo_donations()
+    undo_comments()
+    undo_campaigns()
+    undo_categories()
+    undo_users()
+    
+    # Now, seed the data into the empty tables
+    seeded_users = seed_users()
+    seeded_categories = seed_categories()
+    seed_projects(seeded_users, seeded_categories)
     seed_project_categories()
-    # Add other seed functions here
     seed_rewards()
 
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
+    # Run undo commands in the reverse order of creation
+    undo_rewards()
     undo_project_categories()
     undo_projects()
-    undo_categories()
-    undo_campaigns()
-    undo_users()
     undo_donations()
     undo_comments()
-    # Add other undo functions here
-    undo_rewards()
+    undo_campaigns()
+    undo_categories()
+    undo_users()

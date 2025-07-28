@@ -1,4 +1,6 @@
-from app.models import db, Category
+from app.models import db, Category, environment, SCHEMA
+from sqlalchemy.sql import text
+
 # Categories
 def seed_categories():
     categories = [
@@ -12,7 +14,14 @@ def seed_categories():
 
     db.session.add_all(categories)
     db.session.commit()
+    
+    # Return the list of categories so they can be used in other seed files
+    return categories
 
 def undo_categories():
-    db.session.execute("DELETE FROM categories")
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.categories RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute(text("DELETE FROM categories"))
+    
     db.session.commit()
