@@ -10,6 +10,7 @@ import sessionReducer from "./session";
 import projectsReducer from "./projects";
 import allCategoriesReducer from './allCategories';
 import categoriesReducer from './categories';
+import rewardsReducer from './rewards';
 
 
 const rootReducer = combineReducers({
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   projects: projectsReducer,
   allCategories: allCategoriesReducer,
   projectCategories: categoriesReducer,
+  rewards: rewardsReducer,
 });
 
 let enhancer;

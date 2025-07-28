@@ -19,6 +19,12 @@ def create_reward():
     db.session.commit()
     return jsonify(reward.to_dict()), 201
 
+# Get rewards for a project
+@reward_routes.route('/project/<int:project_id>', methods=['GET'])
+def get_rewards_for_project(project_id):
+    rewards = Reward.query.filter_by(project_id=project_id).all()
+    return jsonify([reward.to_dict() for reward in rewards])
+
 # Update an existing reward
 @reward_routes.route('/<int:id>', methods=['PUT'])
 def update_reward(id):
