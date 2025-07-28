@@ -1,16 +1,64 @@
 .main-nav {
-    display: flex;
-    flex-direction: column; /* Stack the rows vertically */
-    align-items: flex-start; /* Align everything to the left */
-    padding: 1rem 2rem;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
+  display: flex;
+  justify-content: space-between; /* Pushes items to opposite ends */
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #ffffff; /* Clean white background */
+  border-bottom: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+  margin-bottom: 2rem; /* Space below the nav */
 }
 
-/* Container for the top row (Home and Profile) */
-.nav-top-row {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* Space between Home and Profile button */
-    width: 100%; /* Make it take the full width */
+/* Container for the links on the left */
+.nav-links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem; /* Space between links */
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #495057; /* Softer text color */
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: color 0.2s ease-in-out;
+}
+
+/* Underline effect on hover */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #007bff; /* Primary color */
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.nav-links a:hover {
+  color: #212529; /* Darken text on hover */
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Style for the currently active link */
+.nav-links a.active {
+  color: #007bff;
+  font-weight: 700;
+}
+
+/* Container for the profile button on the right */
+.profile-button-container {
+  position: relative;
 }

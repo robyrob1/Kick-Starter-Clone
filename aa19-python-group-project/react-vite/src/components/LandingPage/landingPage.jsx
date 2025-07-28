@@ -25,7 +25,6 @@ function LandingPage() {
     dispatch(setCategoryFilter(e.target.value));
   };
 
-  // This function calculates the days left for a project
   const daysLeft = (endDate) => {
     const now = new Date();
     const end = new Date(endDate);
@@ -35,15 +34,10 @@ function LandingPage() {
 
   return (
     <div className="landing-container">
-      {/* --- HEADER SECTION --- */}
       <header className="landing-header">
         <h1 className="logo">StartKicker</h1>
-        <div className="auth-buttons">
-          <Link to="/login">Log in</Link>
-          <Link to="/signup">Sign up</Link>
-        </div>
+        {/* The login and signup buttons have been removed from this section */}
       </header>
-      {/* --- END HEADER --- */}
 
       <div className="landing-controls">
         <input type="text" placeholder="Search projects..." className="search-bar" />
@@ -57,9 +51,7 @@ function LandingPage() {
         </select>
       </div>
 
-      {/* --- CAMPAIGN GRID SECTION --- */}
       <div className="campaign-grid">
-        {/* This maps over the projects and displays them */}
         {projects && projects.map((project) => (
           <div className="campaign-card" key={project.id}>
             <Link to={`/projects/${project.id}`}>
@@ -74,7 +66,6 @@ function LandingPage() {
           </div>
         ))}
       </div>
-      {/* --- END CAMPAIGN GRID --- */}
     </div>
   );
 }

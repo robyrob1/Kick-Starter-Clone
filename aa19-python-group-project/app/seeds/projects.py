@@ -16,10 +16,10 @@ def seed_projects(users, categories):
         current_amount=8750,
         deadline=datetime.now() + timedelta(days=22),
         category="Technology",
-        image_url="",
+        image_url="https://images.pexels.com/photos/5199128/pexels-photo-5199128.jpeg?_gl=1*17utc5c*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEyNDU1JGo1MyRsMCRoMA..",
         user_id=demo.id
     )
-    project1.categories.append(technology) # 3. Link the category
+    project1.categories.append(technology) 
 
     project2 = Project(
         title="Fantasy Board Game",
@@ -28,7 +28,7 @@ def seed_projects(users, categories):
         current_amount=42300,
         deadline=datetime.now() + timedelta(days=12),
         category="Games",
-        image_url="",
+        image_url="https://images.pexels.com/photos/776654/pexels-photo-776654.jpeg?_gl=1*114kqhz*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEyNTU2JGo1MCRsMCRoMA..",
         user_id=terry.id
     )
     project2.categories.append(games)
@@ -40,7 +40,7 @@ def seed_projects(users, categories):
         current_amount=6200,
         deadline=datetime.now() + timedelta(days=35),
         category="Art",
-        image_url="",
+        image_url="https://images.pexels.com/photos/7319307/pexels-photo-7319307.jpeg?_gl=1*5fm0ap*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEyNjA5JGo1OSRsMCRoMA..",
         user_id=sam.id
     )
     project3.categories.append(art)
@@ -52,7 +52,7 @@ def seed_projects(users, categories):
         current_amount=3400,
         deadline=datetime.now() + timedelta(days=28),
         category="Film & Video",
-        image_url="",
+        image_url="https://images.pexels.com/photos/1766686/pexels-photo-1766686.jpeg?_gl=1*75nzno*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEyNjQ3JGoyMSRsMCRoMA..",
         user_id=demo.id
     )
     project4.categories.append(film_video)
@@ -64,7 +64,7 @@ def seed_projects(users, categories):
         current_amount=5650,
         deadline=datetime.now() + timedelta(days=18),
         category="Music",
-        image_url="",
+        image_url="https://images.pexels.com/photos/6826021/pexels-photo-6826021.jpeg?_gl=1*w5z1ar*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEyNjgyJGo0OCRsMCRoMA..",
         user_id=terry.id
     )
     project5.categories.append(music)
@@ -76,7 +76,7 @@ def seed_projects(users, categories):
         current_amount=11200,
         deadline=datetime.now() + timedelta(days=40),
         category="Food & Drink",
-        image_url="",
+        image_url="https://images.pexels.com/photos/33150356/pexels-photo-33150356.jpeg?_gl=1*31peme*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEyNzIzJGo3JGwwJGgw",
         user_id=sam.id
     )
     project6.categories.append(food_drink)
@@ -88,7 +88,7 @@ def seed_projects(users, categories):
         current_amount=16800,
         deadline=datetime.now() + timedelta(days=25),
         category="Art",
-        image_url="",
+        image_url="https://images.pexels.com/photos/16516/pexels-photo.jpg?_gl=1*1ist8dh*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEyNzU0JGo1MSRsMCRoMA..",
         user_id=demo.id
     )
     project7.categories.append(art)
@@ -100,7 +100,7 @@ def seed_projects(users, categories):
         current_amount=21500,
         deadline=datetime.now() + timedelta(days=31),
         category="Technology",
-        image_url="",
+        image_url="https://images.pexels.com/photos/4750262/pexels-photo-4750262.jpeg?_gl=1*xi61wv*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEyNzk3JGo4JGwwJGgw",
         user_id=terry.id
     )
     project8.categories.append(technology)
@@ -112,7 +112,7 @@ def seed_projects(users, categories):
         current_amount=7300,
         deadline=datetime.now() + timedelta(days=42),
         category="Games",
-        image_url="",
+        image_url="https://images.pexels.com/photos/5767676/pexels-photo-5767676.jpeg?_gl=1*1an3gih*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEyODgxJGozMyRsMCRoMA..",
         user_id=sam.id
     )
     project9.categories.append(games)
@@ -124,7 +124,7 @@ def seed_projects(users, categories):
         current_amount=32100,
         deadline=datetime.now() + timedelta(days=8),
         category="Technology",
-        image_url="",
+        image_url="https://images.pexels.com/photos/16814788/pexels-photo-16814788.jpeg?_gl=1*101qq66*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEyOTE5JGo1NyRsMCRoMA..",
         user_id=demo.id
     )
     project10.categories.append(technology)
@@ -136,9 +136,10 @@ def seed_projects(users, categories):
         current_amount=7800,
         deadline=datetime.now() + timedelta(days=45),
         category="Art",
-        image_url="",
+        image_url="https://images.pexels.com/photos/26632166/pexels-photo-26632166.jpeg?_gl=1*1ppd62n*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEzMDY1JGo0NSRsMCRoMA..",
         user_id=sam.id
     )
+
     project11.categories.append(art)
 
     project12 = Project(
@@ -148,7 +149,7 @@ def seed_projects(users, categories):
         current_amount=8000,
         deadline=datetime.now() + timedelta(days=10),
         category="Art",
-        image_url="",
+        image_url="https://images.pexels.com/photos/3662630/pexels-photo-3662630.jpeg?_gl=1*1tgqe48*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEzMTMxJGo0NCRsMCRoMA..",
         user_id=terry.id
     )
     project12.categories.append(art)
@@ -160,10 +161,12 @@ def seed_projects(users, categories):
         current_amount=19500,
         deadline=datetime.now() + timedelta(days=60),
         category="Games",
-        image_url="",
+        image_url="https://images.pexels.com/photos/1971084/pexels-photo-1971084.jpeg?_gl=1*r7yvp5*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEzMTY1JGoxMCRsMCRoMA..",
         user_id=demo.id
     )
+
     project13.categories.append(games)
+    
 
     project14 = Project(
         title="Escape Room Board Game",
@@ -172,7 +175,7 @@ def seed_projects(users, categories):
         current_amount=35000,
         deadline=datetime.now() + timedelta(days=2),
         category="Games",
-        image_url="",
+        image_url="https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg?_gl=1*1w9lgz5*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEzMzc1JGo1MiRsMCRoMA..",
         user_id=sam.id
     )
     project14.categories.append(games)
@@ -184,7 +187,7 @@ def seed_projects(users, categories):
         current_amount=9500,
         deadline=datetime.now() + timedelta(days=25),
         category="Music",
-        image_url="",
+        image_url="https://images.pexels.com/photos/9401734/pexels-photo-9401734.jpeg?_gl=1*r2l9q8*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEzNDA5JGoxOCRsMCRoMA..",
         user_id=terry.id
     )
     project15.categories.append(music)
@@ -196,7 +199,7 @@ def seed_projects(users, categories):
         current_amount=41200,
         deadline=datetime.now() + timedelta(days=38),
         category="Film & Video",
-        image_url="",
+        image_url="https://images.pexels.com/photos/29682459/pexels-photo-29682459.jpeg?_gl=1*13t70wq*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEzNDYxJGozMiRsMCRoMA..",
         user_id=demo.id
     )
     project16.categories.append(film_video)
@@ -208,7 +211,7 @@ def seed_projects(users, categories):
         current_amount=18300,
         deadline=datetime.now() + timedelta(days=5),
         category="Food & Drink",
-        image_url="",
+        image_url="https://images.pexels.com/photos/5737247/pexels-photo-5737247.jpeg?_gl=1*1sfm3w5*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEzNTI5JGoyNCRsMCRoMA..",
         user_id=sam.id
     )
     project17.categories.append(food_drink)
@@ -220,7 +223,7 @@ def seed_projects(users, categories):
         current_amount=15000,
         deadline=datetime.now() + timedelta(days=50),
         category="Food & Drink",
-        image_url="",
+        image_url="https://images.pexels.com/photos/683039/pexels-photo-683039.jpeg?_gl=1*63f13p*_ga*MjU2MDYzNDQ2LjE3NDc2MTIzMjQ.*_ga_8JE65Q40S6*czE3NTM3MTIzNDAkbzEzJGcxJHQxNzUzNzEzNDkzJGo2MCRsMCRoMA..",
         user_id=terry.id
     )
     project18.categories.append(food_drink)
