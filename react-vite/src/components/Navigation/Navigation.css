@@ -1,0 +1,16 @@
+.main-nav {
+    display: flex;
+    flex-direction: column; /* Stack the rows vertically */
+    align-items: flex-start; /* Align everything to the left */
+    padding: 1rem 2rem;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Container for the top row (Home and Profile) */
+.nav-top-row {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between Home and Profile button */
+    width: 100%; /* Make it take the full width */
+}
