@@ -1,0 +1,117 @@
+.project-details-page {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+}
+
+/* This is the two-column grid for the top section */
+.project-main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  margin-bottom: 3rem;
+}
+
+.project-details-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.project-info-panel {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.project-info-panel h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.project-info-panel p {
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.project-info-panel strong {
+  color: #212529;
+}
+
+.project-categories-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.category-pill {
+  background-color: #e9ecef;
+  color: #495057;
+  padding: 0.3rem 0.8rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* --- NEW AND UPDATED BUTTON STYLES --- */
+
+/* This is the container for the "Donate" and "Comment" buttons */
+.project-details-buttons {
+  display: flex;
+  gap: 0.75rem; /* Adds space between the buttons */
+  margin-bottom: 1.5rem;
+}
+
+/* This is the container for the owner's action buttons */
+.owner-controls {
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap to the next line */
+  align-items: center;
+  gap: 0.75rem; /* Adds space between all items */
+  margin-top: 1rem;
+}
+
+/* This targets ALL buttons in the info panel */
+.project-info-panel button {
+  /* Make buttons smaller */
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  margin-right: 0; /* Remove the old margin */
+}
+
+/* Style the horizontal rule for better separation */
+.owner-controls hr {
+  width: 100%;
+  border: none;
+  border-top: 1px solid #e9ecef;
+  margin: 0.5rem 0;
+}
+
+/* --- REWARDS SECTION STYLES --- */
+.rewards-section {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.rewards-list {
+  list-style: none;
+  padding: 0;
+}
+
+.reward-item {
+  border-bottom: 1px solid #e9ecef;
+  padding: 1.5rem 0;
+}
+
+.reward-item:last-child {
+  border-bottom: none;
+}
