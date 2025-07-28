@@ -5,15 +5,20 @@ from app.models.db import db
 reward_routes = Blueprint('rewards', __name__)
 
 # Create a new reward
+from datetime import datetime
+
 @reward_routes.route('/', methods=['POST'])
 def create_reward():
     data = request.get_json()
+    estimated_delivery = data.get('estimated_delivery')
+    if estimated_delivery:
+        estimated_delivery = datetime.strptime(estimated_delivery, '%Y-%m-%d').date()
     reward = Reward(
         project_id=data.get('project_id'),
         title=data.get('title'),
         description=data.get('description'),
         pledge_amount=data.get('pledge_amount'),
-        estimated_delivery=data.get('estimated_delivery')
+        estimated_delivery=estimated_delivery
     )
     db.session.add(reward)
     db.session.commit()
@@ -30,10 +35,13 @@ def get_rewards_for_project(project_id):
 def update_reward(id):
     reward = Reward.query.get_or_404(id)
     data = request.get_json()
+    estimated_delivery = data.get('estimated_delivery')
+    if estimated_delivery:
+        estimated_delivery = datetime.strptime(estimated_delivery, '%Y-%m-%d').date()
     reward.title = data.get('title', reward.title)
     reward.description = data.get('description', reward.description)
     reward.pledge_amount = data.get('pledge_amount', reward.pledge_amount)
-    reward.estimated_delivery = data.get('estimated_delivery', reward.estimated_delivery)
+    reward.estimated_delivery = estimated_delivery if estimated_delivery else reward.estimated_delivery
     db.session.commit()
     return jsonify(reward.to_dict())
 
