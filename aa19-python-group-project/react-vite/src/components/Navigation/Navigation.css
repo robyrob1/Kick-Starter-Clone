@@ -89,6 +89,23 @@
 }
 
 /* --- STYLES TO MATCH "HOME" LINK --- */
+
+.profile-dropdown .modal-menu-item-sign-in {
+  width: 100%;
+  text-align: left;
+  padding: 8px 0;
+  cursor: pointer;
+  color: black;
+  border-radius: 4px;
+
+}
+
+.profile-dropdown .modal-menu-item-sign-in:hover {
+  color: #007bff;
+  background-color: #f0f8ff; 
+  padding-left: 12px;
+}
+
 .profile-dropdown .modal-menu-item,
 .profile-dropdown .logout-button {
   background: none;
