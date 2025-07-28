@@ -59,6 +59,31 @@ function ProjectDetails() {
     return diffDays > 0 ? diffDays : 0;
   };
 
+
+    const editProject = () => {
+    navigate(`/projects/${project.id}/edit`);
+  };
+
+  const deleteTheProject = async () => {
+    let letsDeleteProject = window.confirm("Are you sure you want to delete this project?");
+    
+    if(letsDeleteProject == true) {
+      console.log("deleting project...");
+      const result = await dispatch(deleteProject(project.id));
+      console.log("delete result:", result);
+      navigate("/"); 
+    } else {
+      console.log("user cancelled delete");
+    }
+  };
+
+  let projectOwner = false;
+  if(sessionUser) {
+    if(sessionUser.id === project.user_id) {
+      projectOwner = true;
+    }
+  }
+
   return (
     <div className="project-details-page">
       <div className="project-main-content">
@@ -78,6 +103,17 @@ function ProjectDetails() {
           <div className="project-details-buttons">
             <button>Donate</button>
             <button>Comment</button>
+
+            {projectOwner && (
+              <>
+                <button onClick={editProject} className="edit-btn">
+                  Edit Project
+                </button>
+                <button onClick={deleteTheProject} className="delete-btn">
+                  Delete Project
+                  </button>
+                  </>
+            )}
           </div>
           {isOwner && (
             <div className="owner-controls">
