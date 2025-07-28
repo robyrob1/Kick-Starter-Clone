@@ -8,7 +8,7 @@ const loadCategories = (categories) => ({
 
 // Thunks
 export const fetchAllCategories = () => async (dispatch) => {
-    const response = await fetch('/api/categories');
+    const response = await fetch('/api/categories/'); // Added trailing slash for consistency
     if (response.ok) {
         const data = await response.json();
         dispatch(loadCategories(data));
@@ -19,12 +19,13 @@ export const fetchAllCategories = () => async (dispatch) => {
 const initialState = {};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case LOAD_CATEGORIES:
+        case LOAD_CATEGORIES: {
             const newState = {};
             action.categories.forEach(category => {
                 newState[category.id] = category;
             });
             return newState;
+        }
         default:
             return state;
     }

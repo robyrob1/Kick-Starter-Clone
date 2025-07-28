@@ -1,33 +1,22 @@
 const SET_PROJECTS = 'projects/setProjects';
 const SET_PROJECT = 'projects/setProject';
 const ADD_PROJECT = 'projects/addProject';
+const REMOVE_PROJECT = 'projects/removeProject';
 const CLEAR_PROJECTS = 'projects/clearProjects';
-
-
+const SET_CATEGORY_FILTER = 'projects/setCategoryFilter';
 
 // Action Creators
-const setProjects = (projects) => ({
-  type: SET_PROJECTS,
-  payload: projects
-});
-
-const setIndividualProject = (project) => ({
-  type: SET_PROJECT,
-  payload: project
-});
-
-const addProject = (project) => ({
-  type: ADD_PROJECT,
-  payload: project
-});
-
-export const clearProjects = () => ({
-    type: CLEAR_PROJECTS
-});
+const setProjects = (projects) => ({ type: SET_PROJECTS, payload: projects });
+const setIndividualProject = (project) => ({ type: SET_PROJECT, payload: project });
+const addProject = (project) => ({ type: ADD_PROJECT, payload: project });
+const removeProject = (projectId) => ({ type: REMOVE_PROJECT, payload: projectId });
+export const clearProjects = () => ({ type: CLEAR_PROJECTS });
+export const setCategoryFilter = (categoryId) => ({ type: SET_CATEGORY_FILTER, payload: categoryId });
 
 // Thunks
 export const allProjects = () => async (dispatch) => {
-    const response = await fetch("/api/projects/");
+    // Add { cache: 'no-cache' } to prevent the browser from returning a 304 status
+    const response = await fetch("/api/projects/", { cache: 'no-cache' });
     if (response.ok){
         const data = await response.json();
         dispatch(setProjects(data.projects));
@@ -68,22 +57,53 @@ export const fetchProjectsForCategory = (categoryId) => async (dispatch) => {
     }
 };
 
-
-// Reducer
-const initialState ={
-    allProjects: [],
-    currentProject: null
+export const updateProject = (projectId, projectData) => async (dispatch) => {
+    const response = await fetch(`/api/projects/${projectId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(projectData)
+    });
+    if (response.ok) {
+        const updatedProject = await response.json();
+        dispatch(setIndividualProject(updatedProject));
+        return updatedProject;
+    }
 };
 
-function projectsReducer(state = initialState, action){
+export const deleteProject = (projectId) => async (dispatch) => {
+    const response = await fetch(`/api/projects/${projectId}`, {
+        method: "DELETE"
+    });
+    if (response.ok) {
+        dispatch(removeProject(projectId));
+    }
+};
+
+// Reducer
+const initialState = {
+    allProjects: [],
+    currentProject: null,
+    categoryFilter: null
+};
+
+function projectsReducer(state = initialState, action) {
     switch(action.type) {
         case SET_PROJECTS:
             return {...state, allProjects: action.payload };
         case SET_PROJECT:
             return {...state, currentProject: action.payload};
-        case ADD_PROJECT:
+        case ADD_PROJECT: {
             const allProjectsArray = Array.isArray(state.allProjects) ? state.allProjects : [];
             return {...state, allProjects: [...allProjectsArray, action.payload]};
+        }
+        case REMOVE_PROJECT: {
+            const newAllProjects = state.allProjects.filter(p => p.id !== action.payload);
+            return { ...state, allProjects: newAllProjects, currentProject: null };
+        }
+        case CLEAR_PROJECTS:
+            return { ...state, allProjects: [] };
+        case SET_CATEGORY_FILTER:
+            return { ...state, categoryFilter: action.payload };
         default:
            return state;
     }

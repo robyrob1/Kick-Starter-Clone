@@ -3,6 +3,7 @@ import LoginFormPage from "../components/LoginFormPage";
 import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import ProjectDetails from "../components/Projects/ProjectDetails";
+import CreateProjectForm from '../components/Projects/CreateProjectForm';
 import LandingPage from '../components/LandingPage/landingPage'; 
 
 export const router = createBrowserRouter([
@@ -20,6 +21,14 @@ export const router = createBrowserRouter([
       {
         path: "signup",
         element: <SignupFormPage />,
+      },
+      {
+        path: "projects/:projectId",
+        element: <ProjectDetails />,
+      },
+      {
+        path: "projects/new",
+        element: <CreateProjectForm />,
       },
       {
         path: "projects/:projectId",

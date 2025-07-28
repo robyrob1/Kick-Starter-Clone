@@ -1,36 +1,31 @@
-import { useEffect, useState } from "react"; 
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { allProjects, fetchProjectsForCategory } from "../../redux/projects"; 
+import { allProjects, fetchProjectsForCategory, setCategoryFilter } from "../../redux/projects"; 
 import { fetchAllCategories } from "../../redux/allCategories";
 import { Link } from "react-router-dom";
-import "./LandingPage.css"; 
+import "./LandingPage.css";
 
 function LandingPage() {
   const dispatch = useDispatch();
 
-  // 3. Add local state to track the selected category
-  const [selectedCategory, setSelectedCategory] = useState(""); 
-
   const projects = useSelector((state) => state.projects.allProjects);
   const categories = useSelector((state) => Object.values(state.allCategories));
+  const selectedCategory = useSelector((state) => state.projects.categoryFilter);
 
   useEffect(() => {
-    
     if (selectedCategory) {
-      // If a category is selected, fetch only those projects
       dispatch(fetchProjectsForCategory(selectedCategory));
     } else {
-      // Otherwise, fetch all projects
       dispatch(allProjects());
     }
-    // Always fetch the list of all categories for the dropdown
     dispatch(fetchAllCategories());
   }, [dispatch, selectedCategory]);
 
   const handleCategorySelect = (e) => {
-    setSelectedCategory(e.target.value);
+    dispatch(setCategoryFilter(e.target.value));
   };
 
+  // This function calculates the days left for a project
   const daysLeft = (endDate) => {
     const now = new Date();
     const end = new Date(endDate);
@@ -40,6 +35,7 @@ function LandingPage() {
 
   return (
     <div className="landing-container">
+      {/* --- HEADER SECTION --- */}
       <header className="landing-header">
         <h1 className="logo">StartKicker</h1>
         <div className="auth-buttons">
@@ -47,11 +43,12 @@ function LandingPage() {
           <Link to="/signup">Sign up</Link>
         </div>
       </header>
+      {/* --- END HEADER --- */}
 
       <div className="landing-controls">
         <input type="text" placeholder="Search projects..." className="search-bar" />
-        <select className="sort-dropdown" onChange={handleCategorySelect} value={selectedCategory}>
-          <option value="">Sort by Genre</option> {/* Changed text for clarity */}
+        <select className="sort-dropdown" onChange={handleCategorySelect} value={selectedCategory || ""}>
+          <option value="">All Genres</option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
@@ -60,8 +57,10 @@ function LandingPage() {
         </select>
       </div>
 
+      {/* --- CAMPAIGN GRID SECTION --- */}
       <div className="campaign-grid">
-        {projects.map((project) => (
+        {/* This maps over the projects and displays them */}
+        {projects && projects.map((project) => (
           <div className="campaign-card" key={project.id}>
             <Link to={`/projects/${project.id}`}>
               <img src={project.image_url} alt={project.title} className="campaign-img" />
@@ -75,6 +74,7 @@ function LandingPage() {
           </div>
         ))}
       </div>
+      {/* --- END CAMPAIGN GRID --- */}
     </div>
   );
 }
