@@ -5,23 +5,31 @@ import {
   combineReducers,
 } from "redux";
 import thunk from "redux-thunk";
+import logger from "redux-logger"; // 1. Import logger directly at the top
 import sessionReducer from "./session";
-import projectReducer from "./projects";
+import projectsReducer from "./projects";
+import allCategoriesReducer from './allCategories';
+import categoriesReducer from './categories';
+import rewardsReducer from './rewards';
 
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   projects: projectsReducer,
+  allCategories: allCategoriesReducer,
+  projectCategories: categoriesReducer,
+  rewards: rewardsReducer,
 });
 
 let enhancer;
-if (import.meta.env.MODE === "production") {
-  enhancer = applyMiddleware(thunk);
-} else {
-  const logger = (await import("redux-logger")).default;
+
+// 2. The setup is simplified for development mode
+if (import.meta.env.MODE !== "production") {
   const composeEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   enhancer = composeEnhancers(applyMiddleware(thunk, logger));
+} else {
+  enhancer = applyMiddleware(thunk);
 }
 
 const configureStore = (preloadedState) => {

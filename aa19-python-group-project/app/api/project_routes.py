@@ -1,17 +1,17 @@
 from flask import Blueprint, jsonify, request
-from app.models import Project, User, db
+from app.models import Project, User, db, Category # 1. Import the Category model
 from flask_login import login_required, current_user
 from datetime import datetime
 
 project_routes = Blueprint('projects', __name__)
 
-# Home page, gets all of the projects
+
 @project_routes.route('/')
 def get_all_projects():
     projects = Project.query.all()
     return {'projects': [project.to_dict() for project in projects]}   
 
-# This grabs the project by id
+
 @project_routes.route('/<int:id>')
 def get_project(id):
     project = Project.query.get(id)
@@ -20,27 +20,41 @@ def get_project(id):
     
     return project.to_dict()
 
-#allows user to create a new project as long as they have an account and sign in
+
 @project_routes.route('/', methods=['POST'])
 @login_required
 def create_project():
     data = request.get_json()
+    
+    
+    category_name = data.get('category')
 
+    # Create the new project instance
     new_project = Project(
         title = data['title'],
         description=data['description'],
         goal=data['goal'],
         deadline=datetime.fromisoformat(data['deadline']),
-        category=data.get('category'),
+        category=category_name, 
         image_url=data.get('image_url'),
         user_id=current_user.id
     )
+
+    
+    if category_name:
+        category = Category.query.filter(Category.name == category_name).first()
+        
+        if category:
+            new_project.categories.append(category)
+
     db.session.add(new_project)
     db.session.commit()
     
     return new_project.to_dict(), 201
 
-#allows project owners to update their project if signed in
+
+
+
 @project_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def update_project(id):
@@ -64,7 +78,7 @@ def update_project(id):
     db.session.commit()
     return project.to_dict()
 
-#users can delte projects as long as theyre signd in
+
 @project_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_project(id):
@@ -77,4 +91,3 @@ def delete_project(id):
     db.session.delete(project)
     db.session.commit()
     return {'message': 'Project deleted successfully'}
-
