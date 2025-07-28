@@ -41,12 +41,12 @@ function EditProjectForm() {
         }
     }, [project, projectId]);
 
-    // loading screen
+    // the loading screen
     if (!project || project.id != Number(projectId)) {
         return <h2>Loading...</h2>;
     }
 
-    // check if user can edit
+    // checks if user can edit
     if (!sessionUser || sessionUser.id != project.user_id) {
         return <h2>Unauthorized</h2>;
     }
