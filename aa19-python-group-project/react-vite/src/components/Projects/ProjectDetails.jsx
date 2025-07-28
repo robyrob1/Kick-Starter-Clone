@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { individualProject } from "../../redux/projects";
+import { individualProject, deleteProject } from "../../redux/projects";
 import { fetchRewardsForProject, deleteReward } from "../../redux/rewards";
 import ProjectCategoryManager from './ProjectCategoryManager';
-import RewardsModal from './RewardModal'; // Import RewardsModal component
+import RewardsModal from './RewardModal';
 import "./ProjectDetails.css";
 
 function ProjectDetails() {
   const { projectId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // 2. Get the current user from the session state
   const sessionUser = useSelector((state) => state.session.user);
   const project = useSelector((state) => state.projects.currentProject);
   const rewards = useSelector((state) => state.rewards.rewards);
@@ -24,10 +24,18 @@ function ProjectDetails() {
     dispatch(fetchRewardsForProject(projectId));
   }, [dispatch, projectId]);
 
-  // A more robust loading check
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete this project?")) {
+      await dispatch(deleteProject(projectId));
+      navigate('/');
+    }
+  };
+
   if (!project || project.id !== Number(projectId)) {
       return <h2>Loading...</h2>;
   }
+
+  const isOwner = sessionUser && sessionUser.id === project.user_id;
 
   const daysLeft = (endDate) => {
     const now = new Date();
@@ -37,13 +45,13 @@ function ProjectDetails() {
   };
 
   const handleRewardCreated = (newReward) => {
-    // Optionally handle the new reward, e.g., refresh project data or show a message
     setShowRewardsModal(false);
     setRewardToEdit(null);
     dispatch(fetchRewardsForProject(projectId));
   };
 
   const daysBetween = (dateString) => {
+    if (!dateString) return 0;
     const now = new Date();
     const date = new Date(dateString);
     const diffTime = date - now;
@@ -52,81 +60,65 @@ function ProjectDetails() {
   };
 
   return (
-    <div className="project-details-container">
-      <h1>{project.title}</h1>
-      <img className="project-details-image" src={project.image_url} alt={project.title} />
-      <p><strong>Description:</strong> {project.description}</p>
-      <p><strong>Goal:</strong> ${project.goal}</p>
-      
-      <p><strong>Ends in:</strong> {daysLeft(project.deadline)}</p>
-      <p><strong>Creator:</strong> {project.creator}</p>
+    <div className="project-details-page">
+      <div className="project-main-content">
+        <img className="project-details-image" src={project.image_url} alt={project.title} />
 
-      <div className="project-details-buttons">
-        <button>Donate</button>
-        <button>Comment</button>
-        {sessionUser && sessionUser.id === project.user_id && (
-          <button onClick={() => setShowRewardsModal(true)}>Add Rewards</button>
-        )}
+        <div className="project-info-panel">
+          <h1>{project.title}</h1>
+          <div className="project-categories-display">
+            {project.categories && project.categories.map((categoryName, index) => (
+              <span key={index} className="category-pill">{categoryName}</span>
+            ))}
+          </div>
+          <p><strong>Creator:</strong> {project.creator}</p>
+          <p><strong>Description:</strong> {project.description}</p>
+          <p><strong>Goal:</strong> ${project.goal}</p>
+          <p><strong>Ends in:</strong> {daysLeft(project.deadline)}</p>
+          <div className="project-details-buttons">
+            <button>Donate</button>
+            <button>Comment</button>
+          </div>
+          {isOwner && (
+            <div className="owner-controls">
+              <hr/>
+              <Link to={`/projects/${project.id}/edit`}>
+                <button>Update Project</button>
+              </Link>
+              <button onClick={handleDelete}>Delete Project</button>
+              <button onClick={() => setShowRewardsModal(true)}>Manage Rewards</button>
+              <ProjectCategoryManager projectId={project.id} />
+            </div>
+          )}
+        </div>
       </div>
-
-      <hr />
 
       {showRewardsModal && (
         <RewardsModal
           projectId={project.id}
           rewardCreated={handleRewardCreated}
-          onClose={() => {
-            setShowRewardsModal(false);
-            setRewardToEdit(null);
-          }}
+          onClose={() => { setShowRewardsModal(false); setRewardToEdit(null); }}
           existingReward={rewardToEdit}
         />
       )}
 
       <section className="rewards-section">
         <h2>Rewards</h2>
-        {rewards.length === 0 ? (
+        {rewards && rewards.length === 0 ? (
           <p>No rewards available for this project.</p>
         ) : (
           <ul className="rewards-list">
-{rewards.map((reward) => (
-  <li key={reward.id} className="reward-item">
-    <h3>
-      {reward.title}
-      {sessionUser && sessionUser.id === project.user_id && (
-        <>
-          <button
-            className="edit-reward-button"
-            onClick={() => {
-              setShowRewardsModal(true);
-              setRewardToEdit(reward);
-            }}
-            aria-label={`Edit reward ${reward.title}`}
-          >
-            ✎
-          </button>
-          <button
-            className="delete-reward-button"
-            onClick={() => dispatch(deleteReward(reward.id))}
-            aria-label={`Delete reward ${reward.title}`}
-          >
-            ×
-          </button>
-        </>
-      )}
-    </h3>
-    <p>{reward.description}</p>
-    <p><strong>Pledge Amount:</strong> ${reward.pledge_amount}</p>
-    {reward.estimated_delivery && <p><strong>Estimated Delivery:</strong> {daysBetween(reward.estimated_delivery)} days</p>}
-  </li>
-))}
+            {rewards && rewards.map((reward) => (
+              <li key={reward.id} className="reward-item">
+                <h3>{reward.title}</h3>
+                <p>{reward.description}</p>
+                <p><strong>Pledge Amount:</strong> ${reward.pledge_amount}</p>
+                {reward.estimated_delivery && <p><strong>Estimated Delivery:</strong> {daysBetween(reward.estimated_delivery)} days</p>}
+              </li>
+            ))}
           </ul>
         )}
       </section>
-    
-      {sessionUser && sessionUser.id === project.user_id && (
-        <ProjectCategoryManager projectId={project.id} />
-      )}
     </div>
   );
 }

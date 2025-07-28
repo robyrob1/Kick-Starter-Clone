@@ -5,6 +5,8 @@ import Layout from './Layout';
 import ProjectDetails from "../components/Projects/ProjectDetails";
 import CreateProjectForm from '../components/Projects/CreateProjectForm';
 import LandingPage from '../components/LandingPage/landingPage'; 
+import UpdateProjectForm from '../components/Projects/UpdateProjectForm';
+
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: "projects/:projectId",
         element: <ProjectDetails />,
+      },
+      {
+        path: "projects/:projectId/edit",
+        element: <UpdateProjectForm />,
       },
     ],
   },

@@ -13,21 +13,18 @@ function ProfileButton() {
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+    e.stopPropagation();
     setShowMenu(!showMenu);
   };
 
   useEffect(() => {
     if (!showMenu) return;
-
     const closeMenu = (e) => {
       if (ulRef.current && !ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
     };
-
     document.addEventListener("click", closeMenu);
-
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
@@ -42,20 +39,21 @@ function ProfileButton() {
   return (
     <>
       <button onClick={toggleMenu}>
-        <FaUserCircle />
+        <FaUserCircle size={24} />
       </button>
       {showMenu && (
         <ul className={"profile-dropdown"} ref={ulRef}>
           {user ? (
             <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
+              <li className="user-info">{user.username}</li>
+              <li className="user-info">{user.email}</li>
               <li>
-                <button onClick={logout}>Log Out</button>
+                <button className="logout-button" onClick={logout}>Log Out</button>
               </li>
             </>
           ) : (
             <>
+              {/* Make sure your OpenModalMenuItem renders a <li> with className="modal-menu-item" */}
               <OpenModalMenuItem
                 itemText="Log In"
                 onItemClick={closeMenu}
