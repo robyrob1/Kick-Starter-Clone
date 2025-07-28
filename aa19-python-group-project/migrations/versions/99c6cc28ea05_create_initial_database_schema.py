@@ -1,8 +1,8 @@
-"""Create initial tables
+"""Create initial database schema
 
-Revision ID: dc5261b12dd5
+Revision ID: 99c6cc28ea05
 Revises: 
-Create Date: 2025-07-23 19:31:40.374231
+Create Date: 2025-07-28 08:31:58.119871
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'dc5261b12dd5'
+revision = '99c6cc28ea05'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,6 +23,17 @@ def upgrade():
     sa.Column('name', sa.String(length=50), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
+    )
+    op.create_table('rewards',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('project_id', sa.Integer(), nullable=False),
+    sa.Column('title', sa.Text(), nullable=False),
+    sa.Column('description', sa.Text(), nullable=False),
+    sa.Column('pledge_amount', sa.Numeric(precision=10, scale=2), nullable=False),
+    sa.Column('estimated_delivery', sa.Date(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -96,5 +107,6 @@ def downgrade():
     op.drop_table('projects')
     op.drop_table('campaigns')
     op.drop_table('users')
+    op.drop_table('rewards')
     op.drop_table('categories')
     # ### end Alembic commands ###
