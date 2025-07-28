@@ -17,6 +17,7 @@ function ProjectDetails() {
   const rewards = useSelector((state) => state.rewards.rewards);
 
   const [showRewardsModal, setShowRewardsModal] = useState(false);
+  const [rewardToEdit, setRewardToEdit] = useState(null);
 
   useEffect(() => {
     dispatch(individualProject(projectId));
@@ -38,7 +39,16 @@ function ProjectDetails() {
   const handleRewardCreated = (newReward) => {
     // Optionally handle the new reward, e.g., refresh project data or show a message
     setShowRewardsModal(false);
+    setRewardToEdit(null);
     dispatch(fetchRewardsForProject(projectId));
+  };
+
+  const daysBetween = (dateString) => {
+    const now = new Date();
+    const date = new Date(dateString);
+    const diffTime = date - now;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays > 0 ? diffDays : 0;
   };
 
   return (
@@ -65,7 +75,11 @@ function ProjectDetails() {
         <RewardsModal
           projectId={project.id}
           rewardCreated={handleRewardCreated}
-          onClose={() => setShowRewardsModal(false)}
+          onClose={() => {
+            setShowRewardsModal(false);
+            setRewardToEdit(null);
+          }}
+          existingReward={rewardToEdit}
         />
       )}
 
@@ -75,23 +89,37 @@ function ProjectDetails() {
           <p>No rewards available for this project.</p>
         ) : (
           <ul className="rewards-list">
-            {rewards.map((reward) => (
-              <li key={reward.id} className="reward-item">
-                <h3>
-                  {reward.title}
-                  <button
-                    className="delete-reward-button"
-                    onClick={() => dispatch(deleteReward(reward.id))}
-                    aria-label={`Delete reward ${reward.title}`}
-                  >
-                    ×
-                  </button>
-                </h3>
-                <p>{reward.description}</p>
-                <p><strong>Pledge Amount:</strong> ${reward.pledge_amount}</p>
-                {reward.estimated_delivery && <p><strong>Estimated Delivery:</strong> {reward.estimated_delivery}</p>}
-              </li>
-            ))}
+{rewards.map((reward) => (
+  <li key={reward.id} className="reward-item">
+    <h3>
+      {reward.title}
+      {sessionUser && sessionUser.id === project.user_id && (
+        <>
+          <button
+            className="edit-reward-button"
+            onClick={() => {
+              setShowRewardsModal(true);
+              setRewardToEdit(reward);
+            }}
+            aria-label={`Edit reward ${reward.title}`}
+          >
+            ✎
+          </button>
+          <button
+            className="delete-reward-button"
+            onClick={() => dispatch(deleteReward(reward.id))}
+            aria-label={`Delete reward ${reward.title}`}
+          >
+            ×
+          </button>
+        </>
+      )}
+    </h3>
+    <p>{reward.description}</p>
+    <p><strong>Pledge Amount:</strong> ${reward.pledge_amount}</p>
+    {reward.estimated_delivery && <p><strong>Estimated Delivery:</strong> {daysBetween(reward.estimated_delivery)} days</p>}
+  </li>
+))}
           </ul>
         )}
       </section>

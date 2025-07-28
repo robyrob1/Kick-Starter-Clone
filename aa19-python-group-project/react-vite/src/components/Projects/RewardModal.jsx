@@ -1,13 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './RewardModal.css';
 
-function RewardsModal({ projectId, rewardCreated, onClose }) {
+function RewardsModal({ projectId, rewardCreated, onClose, existingReward }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [pledgeAmount, setPledgeAmount] = useState('');
   const [estimatedDelivery, setEstimatedDelivery] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState('');
+
+  useEffect(() => {
+    if (existingReward) {
+      setTitle(existingReward.title || '');
+      setDescription(existingReward.description || '');
+      setPledgeAmount(existingReward.pledge_amount ? existingReward.pledge_amount.toString() : '');
+      if (existingReward.estimated_delivery) {
+        const now = new Date();
+        const estDate = new Date(existingReward.estimated_delivery);
+        const diffTime = estDate - now;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        setEstimatedDelivery(diffDays > 0 ? diffDays.toString() : '0');
+      } else {
+        setEstimatedDelivery('');
+      }
+    } else {
+      setTitle('');
+      setDescription('');
+      setPledgeAmount('');
+      setEstimatedDelivery('');
+    }
+  }, [existingReward]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,35 +53,38 @@ function RewardsModal({ projectId, rewardCreated, onClose }) {
     try {
       const csrfToken = document.cookie.split('; ').find(row => row.startsWith('csrf_token='))?.split('=')[1] || '';
 
-      const response = await fetch('/api/rewards/', {
-        method: 'POST',
+      const method = existingReward ? 'PUT' : 'POST';
+      const url = existingReward ? `/api/rewards/${existingReward.id}` : '/api/rewards/';
+
+      const response = await fetch(url, {
+        method: method,
         headers: {
           'Content-Type': 'application/json',
           'X-CSRFToken': csrfToken,
         },
         credentials: 'include',
-        body: JSON.stringify({
-          project_id: projectId,
-          title: title.trim(),
-          description: description.trim(),
-          pledge_amount: Number(pledgeAmount),
-          estimated_delivery: estimatedDelivery && estimatedDelivery.trim() !== '' ? estimatedDelivery : null,
-        }),
+      body: JSON.stringify({
+        project_id: projectId,
+        title: title.trim(),
+        description: description.trim(),
+        pledge_amount: Number(pledgeAmount),
+        estimated_delivery: estimatedDelivery && estimatedDelivery.trim() !== '' ? new Date(Date.now() + Number(estimatedDelivery) * 24 * 60 * 60 * 1000).toISOString().split('T')[0] : null,
+      }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create reward');
+        throw new Error(existingReward ? 'Failed to update reward' : 'Failed to create reward');
       }
 
-      const newReward = await response.json();
+      const reward = await response.json();
       if (rewardCreated) {
-        rewardCreated(newReward);
+        rewardCreated(reward);
       }
       if (onClose) {
         onClose();
       }
     } catch (error) {
-      setFormErrors(error.message || 'Error creating reward');
+      setFormErrors(error.message || (existingReward ? 'Error updating reward' : 'Error creating reward'));
     } finally {
       setIsSubmitting(false);
     }
@@ -67,7 +92,7 @@ function RewardsModal({ projectId, rewardCreated, onClose }) {
 
   return (
     <div className="rewards-modal">
-      <h2>Add a Reward</h2>
+      <h2>{existingReward ? 'Edit Reward' : 'Add a Reward'}</h2>
       {formErrors && <div className="form-error-message">{formErrors}</div>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -116,7 +141,7 @@ function RewardsModal({ projectId, rewardCreated, onClose }) {
         </div>
         <div className="modal-buttons">
           <button type="submit" className="submit-button" disabled={isSubmitting}>
-            {isSubmitting ? 'Adding Reward...' : 'Add Reward'}
+            {isSubmitting ? (existingReward ? 'Updating Reward...' : 'Adding Reward...') : (existingReward ? 'Update Reward' : 'Add Reward')}
           </button>
           <button type="button" className="cancel-button" onClick={onClose} disabled={isSubmitting}>
             Cancel
