@@ -7,14 +7,14 @@ import {
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import projectsReducer from "./projects";
-import allCategoriesReducer from './allCategories';
-
-
+import { allCategoriesReducer } from "./allCategories";
+import { projectCategoriesReducer } from "./Categories"; // 👈 renamed import
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   projects: projectsReducer,
   allCategories: allCategoriesReducer,
+  categories: projectCategoriesReducer, // 👈 added this line
 });
 
 let enhancer;
