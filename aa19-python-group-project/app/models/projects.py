@@ -19,6 +19,9 @@ class Project(db.Model):
 
     # --- Relationships ---
 
+    donations = db.relationship('Donation', back_populates='project', cascade="all, delete-orphan")
+
+
     # Connects the project to the user that created it
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     user = db.relationship('User', back_populates='projects')

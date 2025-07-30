@@ -17,7 +17,7 @@ class Campaign(db.Model):
 
     user = db.relationship('User', backref='campaigns')
     comments = db.relationship('Comment', back_populates='campaign', cascade='all, delete-orphan')
-    donations = db.relationship('Donation', back_populates='campaign', cascade='all, delete-orphan')
+   
 
     def to_dict(self):
         return {

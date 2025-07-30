@@ -1,0 +1,23 @@
+.donation-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+}
+
+.donation-modal input {
+  padding: 8px;
+  font-size: 16px;
+}
+
+.donation-modal button {
+  background: #007bff;
+  color: white;
+  padding: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.close-btn {
+  background: #ccc;
+}
