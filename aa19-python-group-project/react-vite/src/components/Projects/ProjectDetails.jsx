@@ -165,7 +165,7 @@ function ProjectDetails() {
           <p>No rewards available for this project.</p>
         ) : (
           <ul className="rewards-list">
-            {rewards &&
+              {rewards &&
               rewards.map((reward) => (
                 <li key={reward.id} className="reward-item">
                   <h3>{reward.title}</h3>
@@ -178,6 +178,44 @@ function ProjectDetails() {
                       <strong>Estimated Delivery:</strong>{" "}
                       {daysBetween(reward.estimated_delivery)} days
                     </p>
+                  )}
+                  {isOwner && (
+                    <>
+                      <button
+                        className="edit-reward-button"
+                        onClick={() => {
+                          setRewardToEdit(reward);
+                          setShowRewardsModal(true);
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="delete-reward-button"
+                        onClick={async () => {
+                          if (window.confirm('Are you sure you want to delete this reward?')) {
+                            try {
+                              const csrfToken = document.cookie.split('; ').find(row => row.startsWith('csrf_token='))?.split('=')[1] || '';
+                              const response = await fetch(`/api/rewards/${reward.id}`, {
+                                method: 'DELETE',
+                                headers: {
+                                  'X-CSRFToken': csrfToken,
+                                },
+                                credentials: 'include',
+                              });
+                              if (!response.ok) {
+                                throw new Error('Failed to delete reward');
+                              }
+                              dispatch(fetchRewardsForProject(projectId));
+                            } catch (error) {
+                              alert(error.message || 'Error deleting reward');
+                            }
+                          }
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </>
                   )}
                 </li>
               ))}
