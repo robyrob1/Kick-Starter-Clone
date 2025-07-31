@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { individualProject, deleteProject } from "../../redux/projects";
-import { fetchRewardsForProject } from "../../redux/rewards";
+import { fetchRewardsForProject, deleteReward } from "../../redux/rewards";
 import {
   fetchDonationsForProject,
   clearProjectDonations,
