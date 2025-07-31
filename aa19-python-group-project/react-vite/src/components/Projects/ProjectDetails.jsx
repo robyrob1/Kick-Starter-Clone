@@ -192,26 +192,8 @@ function ProjectDetails() {
                       </button>
                       <button
                         className="delete-reward-button"
-                        onClick={async () => {
-                          if (window.confirm('Are you sure you want to delete this reward?')) {
-                            try {
-                              const csrfToken = document.cookie.split('; ').find(row => row.startsWith('csrf_token='))?.split('=')[1] || '';
-                              const response = await fetch(`/api/rewards/${reward.id}`, {
-                                method: 'DELETE',
-                                headers: {
-                                  'X-CSRFToken': csrfToken,
-                                },
-                                credentials: 'include',
-                              });
-                              if (!response.ok) {
-                                throw new Error('Failed to delete reward');
-                              }
-                              dispatch(fetchRewardsForProject(projectId));
-                            } catch (error) {
-                              alert(error.message || 'Error deleting reward');
-                            }
-                          }
-                        }}
+                        onClick={() => dispatch(deleteReward(reward.id))}
+                        aria-label={`Delete reward ${reward.title}`}
                       >
                         Delete
                       </button>
